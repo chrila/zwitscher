@@ -7,10 +7,6 @@ class TweetsController < ApplicationController
     @tweet = Tweet.find(params[:id])
   end
 
-  def new
-    @tweet = Tweet.new
-  end
-
   def create
     @tweet = Tweet.new(tweet_params)
     @tweet.user = current_user

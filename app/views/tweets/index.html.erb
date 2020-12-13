@@ -1,4 +1,9 @@
-<h1>Tweets</h1>
+<% if signed_in? %>
+  <div class="my-3">
+    <%= render 'tweet_form', tweet: Tweet.new %>
+  </div>
+<% end %>
+<h1 class="display-3 my-3">Tweets</h1>
 <div class="row row-cols-1 row-cols-xl-2">
   <% @tweets.reverse_each do |t| %>
     <div class="col mb-4">
