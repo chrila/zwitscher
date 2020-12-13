@@ -17,12 +17,13 @@
  @import "bootstrap/scss/bootstrap";
  
  .user-avatar {
-  height: 2rem;
-  width: 2rem;
-  display: inline;
+  height: 4rem;
+  width: 4rem;
+  display: inline-block;
   border-radius: 50%;
   object-fit: cover;
   vertical-align: middle;
+  white-space: normal;
 }
 
 .card-tweet {
@@ -33,6 +34,23 @@
   border-style: solid;
   border-width: 1px;
   margin-top: 1rem;
+}
+
+.tweet-header {
+  white-space: normal;
+  vertical-align: middle;
+  margin-bottom: 1rem;
+}
+
+.tweet-title {
+  display: inline-block;
+  margin-bottom: 0px;
+}
+
+.tweet-header-left {
+  display: inline-block;
+  vertical-align: middle;
+  padding-left: 0.5rem;
 }
 
 .tweet-button-group {

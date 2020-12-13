@@ -25,4 +25,12 @@ class Tweet < ApplicationRecord
       like(user)
     end
   end
+
+  def like_count
+    likes ? likes.length : 0
+  end
+
+  def retweet_count
+    retweets ? retweets.length : 0
+  end
 end
