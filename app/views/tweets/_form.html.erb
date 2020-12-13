@@ -1,10 +1,10 @@
 <%= form_with(model: tweet, local: true) do |form| %>
-  <div class="field">
-    <%= form.label :content %><br />
-    <%= form.text_area :content %>
+  <div class="form-group">
+    <%= form.label :content %>
+    <%= form.text_area :content, class: "form-control" %>
   </div>
 
-  <div class="actions">
-    <%= form.submit %>
+  <div class="form-group">
+    <%= form.submit class: "btn btn-primary" %>
   </div>
 <% end %>
