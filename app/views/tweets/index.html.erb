@@ -9,7 +9,13 @@
     <div class="col mb-4">
       <div class="card card-tweet">
         <div class="card-body">
-          <h5 class="card-title"><img class="user-avatar" src="<%= t.user.pic_url %>" /> <%= t.user %></h5>
+          <h5 class="card-title">
+            <img class="user-avatar" src="<%= t.user.pic_url %>" /> <%= t.user %>
+            <div class="tweet-button-group">
+              <%= link_to "#{t.liked?(current_user) ? 'unlike' : 'like'}", tweet_like_path(t), method: :post %> | 
+              <%= link_to "retweet", tweet_like_path(t) %>
+            </div>
+          </h5>
           <p class="card-text"><%= t.content %></p>
           <p class="card-text"><small class="text-muted"><%= time_ago_in_words(t.created_at) %> ago</small></p>
           <% if t.original_tweet %>

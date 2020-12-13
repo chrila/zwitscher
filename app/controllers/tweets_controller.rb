@@ -20,6 +20,15 @@ class TweetsController < ApplicationController
     end
   end
 
+  def like
+    @tweet = Tweet.find(params[:id])
+    @tweet.toggle_like(current_user)
+
+    respond_to do |format|
+      format.html { redirect_to root_path, notice: "Tweet #{@tweet.liked?(current_user) ? 'liked' : 'unliked'}" }
+    end
+  end
+
   def update
   end
 

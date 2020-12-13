@@ -3,7 +3,10 @@ Rails.application.routes.draw do
     registrations: 'users/registrations',
     sessions: 'users/sessions'
   }
+
   resources :tweets
+  post 'tweets/:id/like', to: 'tweets#like', as: 'tweet_like'
+
   root 'tweets#index'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
