@@ -16,7 +16,11 @@
         </div>
       </div>
       <p class="card-text"><%= tweet.content %></p>
-      <p class="card-text"><small class="text-muted"><%= time_ago_in_words(tweet.created_at) %> ago</small></p>
+      <p class="card-text">
+        <small class="text-muted">
+          <%= link_to "#{time_ago_in_words(tweet.created_at)} ago", tweet_path(tweet) %>
+        </small>
+      </p>
       <% if tweet.original_tweet %>
         <%= render 'tweet_view', tweet: tweet.original_tweet, retweet: true %>
       <% end %>
