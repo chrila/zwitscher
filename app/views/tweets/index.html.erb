@@ -1,10 +1,23 @@
 <h1>Tweets</h1>
-<% @tweets.each do |t| %>
-  <p>
-    <%= t.user %> | <%= t.created_at %>
-    <% if t.original_tweet %>
-      (Retweet of <%= link_to t.original_tweet.user, tweet_path(t.original_tweet) %>)
-    <% end %>
-     - <%= t.content %>
-  </p>
-<% end %>
+<div class="row row-cols-1 row-cols-xl-2">
+  <% @tweets.reverse_each do |t| %>
+    <div class="col mb-4">
+      <div class="card card-tweet">
+        <div class="card-body">
+          <h5 class="card-title"><img class="user-avatar" src="<%= t.user.pic_url %>" /> <%= t.user %></h5>
+          <p class="card-text"><%= t.content %></p>
+          <p class="card-text"><small class="text-muted"><%= time_ago_in_words(t.created_at) %> ago</small></p>
+          <% if t.original_tweet %>
+            <div class="card-retweet">
+              <div class="card-body">
+                <h5 class="card-title"><img class="user-avatar" src="<%= t.original_tweet.user.pic_url %>" /> <%= t.original_tweet.user %></h5>
+                <p class="card-text"><%= t.original_tweet.content %></p>
+                <p class="card-text"><small class="text-muted"><%= time_ago_in_words(t.original_tweet.created_at) %> ago</small></p>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

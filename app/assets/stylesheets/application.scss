@@ -16,3 +16,20 @@
 
  @import "bootstrap/scss/bootstrap";
  
+ .user-avatar {
+  height: 2rem;
+  width: 2rem;
+  display: inline;
+  border-radius: 50%;
+  object-fit: cover;
+  vertical-align: middle;
+}
+
+.card-tweet {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.card-retweet {
+  border-style: solid;
+  border-width: 1px;
+}
