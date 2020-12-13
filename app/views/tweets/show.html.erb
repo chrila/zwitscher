@@ -1,0 +1,22 @@
+<h1>Tweet</h1>
+<p>
+  <strong>User:</strong> <%= @tweet.user %>
+</p>
+<p>
+  <strong>Content:</strong> <%= @tweet.content %>
+</p>
+<p>
+  <strong>Created at:</strong> <%= @tweet.created_at %>
+</p>
+<p>
+  <strong>Updated at:</strong> <%= @tweet.updated_at %>
+</p>
+<p>
+  <strong>Original tweet:</strong> <%= @tweet.original_tweet ? link_to(@tweet.original_tweet.user, tweet_path(@tweet.original_tweet)) : '(None)' %>
+</p>
+<p>
+  <strong>Likes:</strong> <%= @tweet.likes.size %>
+</p>
+<p>
+  <strong>Retweets:</strong> <%= @tweet.retweets.size %>
+</p>

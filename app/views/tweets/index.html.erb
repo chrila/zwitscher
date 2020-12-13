@@ -1,0 +1,10 @@
+<h1>Tweets</h1>
+<% @tweets.each do |t| %>
+  <p>
+    <%= t.user %> | <%= t.created_at %>
+    <% if t.original_tweet %>
+      (Retweet of <%= link_to t.original_tweet.user, tweet_path(t.original_tweet) %>)
+    <% end %>
+     - <%= t.content %>
+  </p>
+<% end %>
