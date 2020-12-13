@@ -13,7 +13,7 @@
             <img class="user-avatar" src="<%= t.user.pic_url %>" /> <%= t.user %>
             <div class="tweet-button-group">
               <%= link_to "#{t.liked?(current_user) ? 'unlike' : 'like'}", tweet_like_path(t), method: :post %> | 
-              <%= link_to "retweet", tweet_like_path(t) %>
+              <%= link_to "retweet", tweet_retweet_path(t), method: :post %>
             </div>
           </h5>
           <p class="card-text"><%= t.content %></p>
