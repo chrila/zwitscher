@@ -5,7 +5,11 @@
 <% end %>
 <h1 class="display-3 my-3">Tweets</h1>
 <div class="row row-cols-1 row-cols-xl-2">
-  <% @tweets.reverse_each do |t| %>
+  <% @tweets.each do |t| %>
     <%= render 'tweet_view', tweet: t, retweet: false %>
   <% end %>
+</div>
+
+<div class="my-3">
+  <%= paginate @tweets %>
 </div>

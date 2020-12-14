@@ -55,3 +55,6 @@ end
 
 # use devise for authentication
 gem 'devise'
+
+# use kaminari for pagination
+gem 'kaminari'

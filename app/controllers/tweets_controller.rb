@@ -1,6 +1,6 @@
 class TweetsController < ApplicationController
   def index
-    @tweets = Tweet.all.limit(50)
+    @tweets = Tweet.order(id: :desc).page(params[:page])
   end
 
   def show
