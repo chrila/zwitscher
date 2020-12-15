@@ -16,6 +16,7 @@
 
  @import "bootstrap/scss/bootstrap";
  @import 'font_awesome5_webfont';
+ @import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
  
  .user-avatar {
   height: 4rem;
@@ -65,4 +66,10 @@
 
 .tweet-detail-li {
   display: inline-block;
+}
+
+.navbar-brand {
+  font-family: 'Pacifico', cursive;
+  font-size: 2rem;
+  padding: 0 0 0 0;
 }
