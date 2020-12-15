@@ -10,10 +10,12 @@
           <small class="text-muted"><%= "Likes: #{tweet.like_count}" %></small> | 
           <small class="text-muted"><%= "Retweets: #{tweet.retweet_count}" %></small>
         </div>
-        <div class="tweet-button-group">
-          <%= link_to "#{tweet.liked?(current_user) ? 'unlike' : 'like'}", tweet_like_path(tweet), method: :post %> | 
-          <%= link_to "retweet", tweet_retweet_path(tweet), method: :post %>
-        </div>
+        <% if signed_in? %>
+          <div class="tweet-button-group">
+            <%= link_to "#{tweet.liked?(current_user) ? 'unlike' : 'like'}", tweet_like_path(tweet), method: :post %> | 
+            <%= link_to "retweet", tweet_retweet_path(tweet), method: :post %>
+          </div>
+        <% end %>
       </div>
       <p class="card-text"><%= tweet.content %></p>
       <p class="card-text">
