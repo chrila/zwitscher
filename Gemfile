@@ -58,3 +58,6 @@ gem 'devise'
 
 # use kaminari for pagination
 gem 'kaminari'
+
+# font awesome icons
+gem 'font_awesome5_rails'

@@ -15,6 +15,7 @@
  */
 
  @import "bootstrap/scss/bootstrap";
+ @import 'font_awesome5_webfont';
  
  .user-avatar {
   height: 4rem;
@@ -56,6 +57,10 @@
 .tweet-button-group {
   float: right;
   font-size: 1rem;
+
+  a:hover {
+    text-decoration: none;
+  }
 }
 
 .tweet-detail-li {
