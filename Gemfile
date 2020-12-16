@@ -55,11 +55,12 @@ end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 # gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
+## gems added for this project
 # use devise for authentication
 gem 'devise'
-
 # use kaminari for pagination
 gem 'kaminari'
-
 # font awesome icons
 gem 'font_awesome5_rails'
+# for creating test data
+gem 'faker'

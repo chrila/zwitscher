@@ -31,10 +31,10 @@ class TweetsController < ApplicationController
 
   def retweet
     @tweet = Tweet.find(params[:id])
-    new_tweet = Tweet.new(user: current_user, content: 'Retweet', original_tweet: @tweet)
+    new_tweet = @tweet.retweet(current_user)
 
     respond_to do |format|
-      if new_tweet.save
+      if new_tweet
         format.html { redirect_to root_path, notice: 'Retweeted!' }
       else
         format.html { redirect_to root_path, alert: 'Retweet not successful.' }

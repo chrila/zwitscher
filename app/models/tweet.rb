@@ -8,6 +8,10 @@ class Tweet < ApplicationRecord
 
   paginates_per 50
 
+  def retweet(user)
+    Tweet.create(original_tweet: self, content: 'Retweet', user: user)
+  end
+
   def liked?(user)
     likes.where(user: user).size.positive?
   end
