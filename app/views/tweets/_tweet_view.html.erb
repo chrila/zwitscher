@@ -11,14 +11,16 @@
           <small class="text-muted px-1"><%= fa_icon('share', type: :solid) %> <%= tweet.retweet_count %></small>
         </div>
         <% if signed_in? %>
-          <div class="tweet-button-group">
-            <%= link_to tweet_like_path(tweet), method: :post, class: "px-2" do %>
-              <%= tweet.liked?(current_user) ? fa_icon('heart', type: :solid) : fa_icon('heart', type: :regular) %>
-            <% end %>
-            <%= link_to tweet_retweet_path(tweet), method: :post, class: "px-2" do %>
-              <%= fa_icon('share', type: :solid) %>
-            <% end %>
-          </div>
+          <% unless retweet %>
+            <div class="tweet-button-group">
+              <%= link_to tweet_like_path(tweet), method: :post, class: "px-2" do %>
+                <%= tweet.liked?(current_user) ? fa_icon('heart', type: :solid) : fa_icon('heart', type: :regular) %>
+              <% end %>
+              <%= link_to tweet_retweet_path(tweet), method: :post, class: "px-2" do %>
+                <%= fa_icon('share', type: :solid) %>
+              <% end %>
+            </div>
+          <% end %>
         <% end %>
       </div>
       <p class="card-text"><%= tweet.content %></p>
