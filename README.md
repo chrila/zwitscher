@@ -1,9 +1,5 @@
 # README
 
-_(in progress)_
-
----
-
 ## ¿Qué es Zwitscher?
 Zwitscher es un clon de Twitter, desarollado en Ruby on Rails para la prueba del modulo 4 del curso "Fullstack developent" de Desafío Latam, generación 39.
 
@@ -16,30 +12,26 @@ Zwitscher está disponible en heroku: https://zwitscher.herokuapp.com/
 > * El modelo debe llamarse user.
 > * La visita al registrarse debe ingresar nombre usuario, foto de perfil (url), email y password.
 
-
-### 1. Agregar devise al Gemfile
 Para la autenticación en este proyecto se usa `devise`.
 ```ruby
 # use devise for authentication
 gem 'devise'
 ```
-### 2. Instalar devise
+Para instalar devise en el proyecto:
 ```bash
 rails devise:install
 ```
-### 3. Generar el modelo `user`
-Por defecto viene con los campos `password` y `email`.
+Para generar el modelo `user`: (por defecto viene con los campos `password` y `email`)
 ```bash
 rails g devise user
 ```
-### 4. Agregar los campos para el nombre usuario y foto de perfil al modelo
+Para gregar los campos para el nombre usuario y foto de perfil al modelo:
 ```
 rails g migration AddNameAndPictureToUser name pic_url
 rails db:migrate
 ```
 
-### 5. Agregar los campos a los formularios
-Primero hay que generar las vistas y controladores de devise y después se puede editarlos para agregar los campos adicionales.
+Para agregar los campos a los formularios, primero hay que generar las vistas y controladores de devise y después se puede editarlos para agregar los campos adicionales.
 ```bash
 rails g devise:views users
 rails g devise:controllers users
@@ -58,8 +50,7 @@ devise_for :users, controllers: {
 }
 ```
 
-#### Views
-A las vistas
+Ahora, a las vistas
 * `app/views/users/registrations/new.html.erb`
 * `app/views/users/registrations/edit.html.erb`
 
@@ -77,7 +68,6 @@ hay que agregar los dos campos nuevos:
 </div>
 ```
 
-#### Controllers
 En el controlador
 * `app/controllers/users/registrations_controller.rb`
 
@@ -349,8 +339,58 @@ Para integrar la funcionalidad a la vista, se puede poner un link así:
 ## Historia 6
 > * Un usuario puede hacer un retweet haciendo click en la acción rt (retweet) de un tweet, esto hará que ingrese un nuevo tweet con el mismo contenido pero además referenciando al tweet original.
 
+Un retweet es un tweet con un vínculo a otro tweet (el `original_tweet`). Yo elegí de en vez de poner el mismo contenido, poner "Retweet" y mostrar el tweet original en la vista.
 
+La lógica de retweet en el modelo `Tweet`:
+```ruby
+def retweet(user)
+  Tweet.create(original_tweet: self, content: 'Retweet', user: user)
+end
+```
+
+En el controller `TweetsController`:
+```ruby
+def retweet
+  @tweet = Tweet.find(params[:id])
+  new_tweet = Tweet.new(user: current_user, content: 'Retweet', original_tweet: @tweet)
+
+  respond_to do |format|
+    if new_tweet.save
+      format.html { redirect_to root_path, notice: 'Retweeted!' }
+    else
+      format.html { redirect_to root_path, alert: 'Retweet not successful.' }
+    end
+  end
+end
+```
+
+Y finalmente la ruta:
+```ruby
+post 'tweets/:id/retweet', to: 'tweets#retweet', as: 'tweet_retweet'
+```
+
+Así se puede hacer un retweet con el siguiente link:
+```erb
+<%= link_to "retweet", tweet_retweet_path(t), method: :post %>
+```
 
 ## Historia 7
 > * Haciendo click en la fecha del tweet se debe ir al detalle del tweet y dentro del detalle debe aparecer la foto de todas las personas que han dado like al tweet.
 > * La fecha del tweet debe aparecer como tiempo en minutos desde la fecha de creación u horas si es mayor de 60 minutos.
+
+Para mostrar las fotos de los usuarios que han dado like al tweet, se agrega lo siguiente a la vista `app/views/tweets/show.html.erb`:
+```erb
+<strong>Likes:</strong> <%= @tweet.like_count %>
+<ul>
+  <% @tweet.likes.each do |like| %>
+    <li class="tweet-detail-li">
+      <img class="user-avatar" src="<%= like.user.pic_url %>" title="<%= like.user %>" />
+    </li>
+  <% end %>
+</ul>
+```
+
+Y en la vista `index`, se agrega la fecha al tweet, que también es el link a la vista `show`:
+```erb
+<%= link_to "#{time_ago_in_words(tweet.created_at)} ago", tweet_path(tweet) %>
+```
