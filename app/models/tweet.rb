@@ -21,7 +21,7 @@ class Tweet < ApplicationRecord
   end
 
   def unlike(user)
-    Like.where(user: user).destroy_all
+    likes.where(user: user).destroy_all
   end
 
   def toggle_like(user)
