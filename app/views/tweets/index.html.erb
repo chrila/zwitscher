@@ -5,9 +5,7 @@
 <% end %>
 <h1 class="display-3 my-3">Tweets</h1>
 <div class="row row-cols-1 row-cols-xl-2">
-  <% @tweets.each do |t| %>
-    <%= render 'tweet_view', tweet: t, retweet: false %>
-  <% end %>
+  <%= render(@tweets) || '<p class="display-2">Be the one to make the first tweet! :)</p>' %>
 </div>
 
 <div class="my-3">

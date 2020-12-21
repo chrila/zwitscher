@@ -1,5 +1,5 @@
 <div class="col mb-4">
-  <div class="card <%= retweet ? 'card-retweet' : 'card-tweet' %>">
+  <div class="card <%= local_assigns[:retweet] ? 'card-retweet' : 'card-tweet' %>">
     <div class="card-body">
       <div class="tweet-header">
         <img class="user-avatar" src="<%= tweet.user.pic_url %>" /> 
@@ -11,7 +11,7 @@
           <small class="text-muted px-1"><%= fa_icon('share', type: :solid) %> <%= tweet.retweet_count %></small>
         </div>
         <% if signed_in? %>
-          <% unless retweet %>
+          <% unless local_assigns[:retweet] %>
             <div class="tweet-button-group">
               <%= link_to tweet_like_path(tweet), method: :post, class: "px-2" do %>
                 <%= tweet.liked?(current_user) ? fa_icon('heart', type: :solid) : fa_icon('heart', type: :regular) %>
@@ -30,7 +30,7 @@
         </small>
       </p>
       <% if tweet.original_tweet %>
-        <%= render 'tweet_view', tweet: tweet.original_tweet, retweet: true %>
+        <%= render tweet.original_tweet, retweet: true %>
       <% end %>
     </div>
   </div>
