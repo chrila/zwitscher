@@ -21,6 +21,18 @@ class User < ApplicationRecord
     following.where(following_user: other_user).destroy_all
   end
 
+  def following?(other_user)
+    following.where(following_user: other_user).positive?
+  end
+
+  def toggle_follow(other_user)
+    if following?(other_user)
+      unfollow(other_user)
+    else
+      follow(other_user)
+    end
+  end
+
   def followed_by_users
     followed_by.map(&:user)
   end
