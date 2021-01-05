@@ -73,3 +73,24 @@
   font-size: 2rem;
   padding: 0 0 0 0;
 }
+
+.user-to-follow {
+  white-space: normal;
+  vertical-align: middle;
+  margin-bottom: 1rem;
+
+  h5 {
+    font-size: 1rem;
+  }
+}
+
+.user-to-follow-header {
+  display: inline-block;
+  vertical-align: middle;
+  padding-left: 0.5rem;
+}
+
+.user-to-follow-name {
+  display: inline-block;
+  margin-bottom: 0px;
+}

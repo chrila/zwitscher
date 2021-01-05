@@ -12,6 +12,7 @@ Zwitscher está disponible en heroku: https://zwitscher.herokuapp.com/
 
 ## Historia 1
 
+> * Añadir un área con usuarios a los que se puede seguir
 > * Modificar la página principal para que, si el usuario ha iniciado sesión, se muestren únicamente los tweets de las personas que sigue.
 > * Tip: Para conseguir esto se deberá crear un modelo Friend donde agregaremos cada usuario que el current_user siga. Además en este modelo agregaremos la columna friend_id para relacionar el id de los amigos del current_user con el user_id de cada tweet (para mayor referencia, revisar imagen adjunta).
 > * Crear el scope tweets_for_me que recibirá una lista de ids de amigos del current_user y entregará todos los tweets relacionados a sus amigos.

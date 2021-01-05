@@ -22,7 +22,7 @@ class User < ApplicationRecord
   end
 
   def following?(other_user)
-    following.where(following_user: other_user).positive?
+    following.where(following_user: other_user).size.positive?
   end
 
   def toggle_follow(other_user)
@@ -41,5 +41,9 @@ class User < ApplicationRecord
 
   def following_users
     following.map(&:following_user)
+  end
+
+  def users_to_follow
+    User.where.not(id: following.map(&:following_user_id)).limit(8)
   end
 end

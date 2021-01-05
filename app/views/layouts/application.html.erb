@@ -13,6 +13,7 @@
 
   <body>
     <%= render "shared/navbar" %>
+
     <div class="container my-4">
       <% if notice %>
         <div class="alert alert-primary alert-dismissible fade show" role="alert">
@@ -22,6 +23,7 @@
           </button>
         </div>
       <% end %>
+
       <% if alert %>
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
           <%= alert %>
@@ -30,6 +32,11 @@
           </button>
         </div>
       <% end %>
+
+      <% if signed_in? %>
+        <%= render "shared/users_to_follow" %>
+      <% end %>
+
       <%= yield %>
     </div>
   </body>

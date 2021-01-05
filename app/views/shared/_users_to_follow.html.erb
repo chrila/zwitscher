@@ -1,0 +1,14 @@
+<h3 class="display-5 my-3">Users you might want to follow</h3>
+<div class="row row-cols-2 row-cols-md-4">
+  <% current_user.users_to_follow.each do |u| %>
+    <div class="p-2">
+      <div class="user-to-follow">
+        <img class="user-avatar" src="<%= u.pic_url %>" title="<%= u %>" />
+        <div class="user-to-follow-header">
+          <h5 class="user-to-follow-name"><%= u %></h5><br>
+          <a class="card-link"><%= current_user.following?(u) ? 'Unfollow' : 'Follow' %></a>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
