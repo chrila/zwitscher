@@ -44,6 +44,8 @@ class User < ApplicationRecord
   end
 
   def users_to_follow
-    User.where.not(id: following.map(&:following_user_id)).limit(8)
+    u = User.where.not(id: following.map(&:following_user_id))
+    u = u.where.not(id: self.id)
+    u.limit(8)
   end
 end
