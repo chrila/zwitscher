@@ -1,6 +1,6 @@
 # README - Hito 2
 
-Nota: Este readme solo incluye las funcionalidades nuevas en hito 2. El readme del hito 1 está [aquí](../blob/v0.1/README.md).
+Nota: Este readme solo incluye las funcionalidades nuevas en hito 2. El readme del hito 1 está [aquí](../v0.1/README.md).
 
 ## ¿Qué es Zwitscher?
 Zwitscher es un clon de Twitter, desarollado en Ruby on Rails para la prueba del modulo 4 del curso "Fullstack developent" de Desafío Latam, generación 39.
