@@ -6,7 +6,7 @@
         <img class="user-avatar" src="<%= u.pic_url %>" title="<%= u %>" />
         <div class="user-to-follow-header">
           <h5 class="user-to-follow-name"><%= u %></h5><br>
-          <a class="card-link"><%= current_user.following?(u) ? 'Unfollow' : 'Follow' %></a>
+          <%= link_to(current_user.following?(u) ? 'Unfollow' : 'Follow', user_follow_path(u), method: :post, class: 'card-link') %>
         </div>
       </div>
     </div>

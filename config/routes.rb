@@ -4,6 +4,10 @@ Rails.application.routes.draw do
     sessions: 'users/sessions'
   }
 
+  devise_scope :user do
+    post '/users/:id/follow', to: 'users/registrations#follow', as: 'user_follow'
+  end
+
   resources :tweets
   post 'tweets/:id/like', to: 'tweets#like', as: 'tweet_like'
   post 'tweets/:id/retweet', to: 'tweets#retweet', as: 'tweet_retweet'

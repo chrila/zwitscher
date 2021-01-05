@@ -4,6 +4,16 @@ class Users::RegistrationsController < Devise::RegistrationsController
   before_action :configure_sign_up_params, only: [:create]
   before_action :configure_account_update_params, only: [:update]
 
+  # POST /users/1/follow
+  def follow
+    other_user = User.find(params[:id])
+    current_user.toggle_follow(other_user)
+
+    respond_to do |format|
+      format.html { redirect_to root_path, notice: "You #{current_user.following?(other_user) ? 'are now' : 'stopped'} following #{other_user}" }
+    end
+  end
+
   # GET /resource/sign_up
   # def new
   #   super
