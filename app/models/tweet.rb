@@ -39,4 +39,6 @@ class Tweet < ApplicationRecord
   def retweet_count
     retweets ? retweets.length : 0
   end
+
+  scope :tweets_for_me, -> (user) { where(user: user.following_users) if user.present? }
 end

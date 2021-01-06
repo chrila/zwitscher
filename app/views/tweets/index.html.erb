@@ -1,11 +1,10 @@
-<% if signed_in? %>
-  <div class="my-3">
-    <%= render 'tweet_form', tweet: Tweet.new %>
-  </div>
-<% end %>
-<h1 class="display-3 my-3">Tweets</h1>
+<h2 class="display-5 my-3">Tweets</h2>
 <div class="row row-cols-1 row-cols-xl-2">
-  <%= render(@tweets) || '<p class="display-2">Be the one to make the first tweet! :)</p>' %>
+  <% if @tweets.size.positive? %>
+    <%= render(@tweets) %>
+  <% else %>
+    <p>Start following users to see some tweets!</p>
+  <% end %>
 </div>
 
 <div class="my-3">

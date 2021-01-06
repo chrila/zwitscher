@@ -9,8 +9,14 @@ class User < ApplicationRecord
   has_many :following, class_name: 'Following', foreign_key: 'user_id'
   has_many :followed_by, class_name: 'Following', foreign_key: 'following_user'
 
+  after_commit :follow_self, on: :create
+  
   def to_s
     name
+  end
+
+  def follow_self
+    follow(self)
   end
 
   def follow(other_user)
@@ -44,8 +50,6 @@ class User < ApplicationRecord
   end
 
   def users_to_follow
-    u = User.where.not(id: following.map(&:following_user_id))
-    u = u.where.not(id: self.id)
-    u.limit(8)
+    User.where.not(id: following.map(&:following_user_id)).limit(4)
   end
 end
