@@ -20,11 +20,11 @@ class User < ApplicationRecord
   end
 
   def follow(other_user)
-    Following.create(user: self, following_user: other_user)
+    Following.create(user: self, following_user: other_user) unless following?(other_user)
   end
 
   def unfollow(other_user)
-    following.where(following_user: other_user).destroy_all
+    following.where(following_user: other_user).destroy_all if following?(other_user)
   end
 
   def following?(other_user)
