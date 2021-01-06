@@ -64,3 +64,5 @@ gem 'kaminari'
 gem 'font_awesome5_rails'
 # for creating test data
 gem 'faker'
+# admin panel
+gem 'activeadmin'

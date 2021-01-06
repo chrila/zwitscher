@@ -32,3 +32,6 @@ User.all.each do |u|
     Like.create(tweet: t, user: u) if rand(1..5) == 1
   end
 end
+
+# admin user
+AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?
