@@ -52,4 +52,20 @@ class User < ApplicationRecord
   def users_to_follow
     User.where.not(id: following.map(&:following_user_id)).limit(4)
   end
+
+  def following_user_count
+    following_users.size
+  end
+
+  def tweet_count
+    tweets.size
+  end
+
+  def retweet_count
+    tweets.retweets.size
+  end
+
+  def like_count
+    likes.size
+  end
 end

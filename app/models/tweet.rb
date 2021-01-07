@@ -41,4 +41,5 @@ class Tweet < ApplicationRecord
   end
 
   scope :tweets_for_me, -> (user) { where(user: user.following_users) if user.present? }
+  scope :retweets, -> { where.not(original_tweet: nil) }
 end
