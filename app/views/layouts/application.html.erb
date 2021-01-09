@@ -33,16 +33,6 @@
         </div>
       <% end %>
 
-      <% if signed_in? %>
-        <div class="my-5">
-          <%= render 'tweet_form', tweet: Tweet.new %>
-        </div>
-        <div class="my-5">
-          <h2 class="display-5 my-3">Users you might be interested in</h2>
-          <%= render "shared/users_to_follow" %>
-        </div>
-      <% end %>
-
       <%= yield %>
     </div>
   </body>

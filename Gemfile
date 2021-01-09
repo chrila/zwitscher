@@ -66,3 +66,5 @@ gem 'font_awesome5_rails'
 gem 'faker'
 # admin panel
 gem 'activeadmin'
+# for searching
+gem 'ransack'

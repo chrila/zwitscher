@@ -1,6 +1,7 @@
 class TweetsController < ApplicationController
   def index
-    @tweets = Tweet.tweets_for_me(current_user).order(id: :desc).page(params[:page])
+    @q = Tweet.tweets_for_me(current_user).ransack(params[:q])
+    @tweets = @q.result.order(id: :desc).page(params[:page])
   end
 
   def show
