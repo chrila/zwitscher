@@ -145,9 +145,9 @@ Esta vista ya contiene un link para seguir y dejar de seguir a los usuarios.
 
 ## Historia 2
 
-> * Se deberá crear un panel de control utilizando ActiveAdmin que liste todos los usuarios y pueda editarlos, cada usuario aparecerá junto al número de cuentas que sigue, cantidad de tweets realizados, cantidad de likes dados y la cantidad de retweets. Además deberán aparecer las acciones de borrar, editar y bloquear, donde borrar un usuario implica borrar en cascada todos sus tweets, likes y retweets.
+> * Se deberá crear un panel de control utilizando ActiveAdmin que liste todos los usuarios y pueda editarlos, cada usuario aparecerá junto al número de cuentas que sigue, cantidad de tweets realizados, cantidad de likes dados y la cantidad de retweets. Además deberán aparecer las acciones de borrar, y editar, donde borrar un usuario implica borrar en cascada todos sus tweets, likes y retweets.
 > * Nota: Solo el admin podrá realizar estas tareas.
-> * En caso de bloquear un usuario, se termina la sesión del usuario bloqueado.
+> * Opcional: Añadir una acción para bloquear un usuario. En caso de bloquear un usuario, se termina la sesión del usuario bloqueado.
 
 ## Historia 3
 

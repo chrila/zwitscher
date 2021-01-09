@@ -28,6 +28,11 @@
         <small class="text-muted">
           <%= link_to "#{time_ago_in_words(tweet.created_at)} ago", tweet_path(tweet) %>
         </small>
+        <% unless local_assigns[:retweet] %>
+          <small class="text-muted tweet-unfollow-link">
+            <%= link_to(current_user.following?(tweet.user) ? 'Unfollow' : 'Follow', user_follow_path(tweet.user), method: :post) %>
+          </small>
+        <% end %>
       </p>
       <% if tweet.original_tweet %>
         <%= render tweet.original_tweet, retweet: true %>
