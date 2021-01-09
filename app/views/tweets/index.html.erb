@@ -1,26 +1,27 @@
-<%= search_form_for @q, class: "form-inline search-bar mb-5" do |f| %>
-  <%= f.search_field :content_cont, class: "form-control mr-2" %>
-  <%= f.submit class: "btn btn-secondary" %>
-<% end %>
-
 <% if signed_in? %>
   <div class="my-5">
     <%= render 'tweet_form', tweet: Tweet.new %>
   </div>
-  <div class="my-5">
+  <div class="users-to-follow-outer my-5">
     <h2 class="display-5 my-3">Users you might be interested in following</h2>
     <%= render "shared/users_to_follow" %>
   </div>
 <% end %>
 
-<h2 class="display-5 my-3">Tweets</h2>
-  <% if @tweets.size.positive? %>
-    <div class="row row-cols-1 row-cols-xl-2">
-      <%= render(@tweets) %>
-    </div>
-  <% else %>
-    <h3>No tweets found :(</h3>
+<div class="tweets-header-outer my-3">
+  <span class="display-4">Tweets</span>
+  <%= search_form_for @q, class: "form-inline search-bar" do |f| %>
+    <%= f.search_field :content_cont, class: "form-control mr-2" %>
+    <%= f.submit class: "btn btn-secondary" %>
   <% end %>
+</div>
+<% if @tweets.size.positive? %>
+  <div class="row row-cols-1 row-cols-xl-2">
+    <%= render(@tweets) %>
+  </div>
+<% else %>
+  <h3>No tweets found :(</h3>
+<% end %>
 
 <div class="my-3">
   <%= paginate @tweets %>

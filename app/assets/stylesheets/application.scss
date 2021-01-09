@@ -28,6 +28,14 @@
   white-space: normal;
 }
 
+.tweets-header-outer {
+  display: flex;
+}
+
+.search-bar {
+  margin-left: auto;
+}
+
 .card-tweet {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
@@ -78,6 +86,18 @@
   padding: 0 0 0 0;
 }
 
+.users-to-follow-outer {
+  background-color: rgba(195, 195, 195, 0.3);
+  border-style: dashed;
+  padding: 1rem;
+  border-width: thin;
+}
+
+.users-to-follow-inner {
+  margin-right: inherit;
+  margin-left: inherit;
+}
+
 .user-to-follow {
   white-space: normal;
   vertical-align: middle;
@@ -97,8 +117,4 @@
 .user-to-follow-name {
   display: inline-block;
   margin-bottom: 0px;
-}
-
-.search-bar {
-  float: right;
 }
