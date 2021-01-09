@@ -4,9 +4,9 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  has_many :tweets
-  has_many :likes
-  has_many :following, class_name: 'Following', foreign_key: 'user_id'
+  has_many :tweets, dependent: :delete_all
+  has_many :likes, dependent: :delete_all
+  has_many :following, class_name: 'Following', foreign_key: 'user_id', dependent: :delete_all
   has_many :followed_by, class_name: 'Following', foreign_key: 'following_user'
 
   after_commit :follow_self, on: :create
