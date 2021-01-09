@@ -1,5 +1,5 @@
 ActiveAdmin.register User do
-  includes :tweets, :likes
+  includes :tweets, :likes, :following
 
   index do
     column :id

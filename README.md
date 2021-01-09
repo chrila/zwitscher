@@ -149,10 +149,165 @@ Esta vista ya contiene un link para seguir y dejar de seguir a los usuarios.
 > * Nota: Solo el admin podrá realizar estas tareas.
 > * Opcional: Añadir una acción para bloquear un usuario. En caso de bloquear un usuario, se termina la sesión del usuario bloqueado.
 
+### Instalar ActiveAdmin
+
+Primero, hay que añadirlo al Gemfile y después correr `bundle`:
+```ruby
+gem 'activeadmin'
+```
+
+Para instalar, hay que correr lo siguiente. Como estamos usando Rails 6, es importante incluir la opción `--use_webpacker`
+```bash
+rails g active_admin:install --use_webpacker
+```
+
+ActiveAdmin tiene sus propios modelos, así que hay que correr las migraciones y el seed para crear el admin user por defecto (`email`: admin@example.com, `password`: password):
+```bash
+rails db:migrate
+rails db:seed
+```
+
+### Registrar el recurso
+Queremos usar ActiveAdmin para gestionar los usuarios, así que hay que registrar el recurso `User`:
+```bash
+rails generate active_admin:resource User
+```
+
+### Cambiando las columnas
+Para cambiar las columnas en la vista del index, hay que agregarlas al archivo `app/admin/users.rb`:
+```ruby
+includes :tweets, :likes, :following
+
+index do
+  column :id
+  column :name
+  column :email
+  column :pic_url
+  column :created_at
+  column :following_user_count
+  column :tweet_count
+  column :retweet_count
+  column :like_count
+
+  actions
+end
+```
+
+Y esos métodos al modelo `User`:
+
+```ruby
+def following_user_count
+  following_users.size
+end
+
+def tweet_count
+  tweets.size
+end
+
+def retweet_count
+  tweets.retweets.size
+end
+
+def like_count
+  likes.size
+end
+```
+
+### El formulario para editar un usuario
+
+Para que se pueda editar un usuario, hay que realizar los siguientes cambios al archivo `app/admin/users.rb`:
+
+```ruby
+form do |f|
+  inputs 'Edit user details' do
+    input :email
+    input :name
+    input :pic_url
+    input :password
+  end
+  actions
+end
+
+permit_params :email, :name, :pic_url, :password
+
+controller do
+  def update
+    if (params[:user][:password].blank? && params[:user][:password_confirmation].blank?)
+      params[:user].delete("password")
+      params[:user].delete("password_confirmation")
+    end
+    super
+  end
+end
+```
+
+### Filtro
+
+La definición de los campos para filtrar va en el mismo archivo:
+
+```ruby
+filter :email
+filter :name
+filter :created_at, as: :date_range
+```
+
 ## Historia 3
 
 > * Implementar un buscador que pueda buscar tweets, para esto se debe hacer una búsqueda parcial ya que el contenido puede ser solo parte de un tweet.
 
+### Ransack
+
+Lo más fácil es usar ransack para el buscador. Primero, hay que agregar la gema al Gemfile y correr `bundle`:
+
+```ruby
+gem 'ransack'
+```
+
+### La vista
+
+Para el buscador, ransack ofrece un helper `search_form_for`. El tipo de busqueda está definido por el argumento `:content_cont`. Eso significa que se evalúa el campo `content` con el método `cont` ('contains').
+
+```erb
+<%= search_form_for @q, class: "form-inline search-bar" do |f| %>
+  <%= f.search_field :content_cont, class: "form-control mr-2" %>
+  <%= f.submit class: "btn btn-secondary" %>
+<% end %>
+```
+
+### El controlador
+
+En el `TweetsController` hay que modificar un poco la acción `index`. Se agrega el buscador de ransack (`@q`), usando el parámetro del formulario (`q`):
+
+```ruby
+def index
+  @q = Tweet.tweets_for_me(current_user).ransack(params[:q])
+  @tweets = @q.result.order(id: :desc).page(params[:page])
+end
+```
+
 ## Historia 4
 
 > * Debe permitirse la incorporación de hashtags en los contenidos (#estos #son #ejemplos), cada hashtag debe ser un link a una búsqueda.
+
+Hay que reemplazar palabras que empiezan con un gato (`#`) por un link a una busqueda para la misma palabra. Para realizar esto, se puede usar el método `gsub` en combinación con expresiónes regulares (regular expressions).
+
+Para encontrar palabras que empiezan con un gato, se puede usar la siguiente expresión: `/#\b\w+\b/`
+
+Después hay que reemplazar cada hashtag por un link de busqueda, es decir un link al index de los tweets con un valor para el parámetro `q`. Agregué un helper al `TweetsController` que hace eso:
+
+```ruby
+def format_tweet_content(content)
+  content.gsub(/#\b\w+\b/) { |hashtag| "<a href=#{tweets_path}?q[content_cont]=%23#{hashtag[1..]}>#{hashtag}</a>" }
+end
+helper_method :format_tweet_content
+```
+
+(para el parámetro `q`, se reemplaza el `#` por `%23`)
+
+Finalmente, uso este helper en la vista de `Tweet`:
+
+```erb
+<%= raw format_tweet_content(tweet.content) %>
+```
+
+El uso de `raw` es necesario para interpretar los tags (en este caso el `<a>`).
