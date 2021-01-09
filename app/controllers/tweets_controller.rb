@@ -1,4 +1,10 @@
 class TweetsController < ApplicationController
+
+  def format_tweet_content(content)
+    content.gsub(/#\b\w+\b/) { |hashtag| "<a href=#{tweets_path}?q[content_cont]=%23#{hashtag[1..]}>#{hashtag}</a>" }
+  end
+  helper_method :format_tweet_content
+
   def index
     @q = Tweet.tweets_for_me(current_user).ransack(params[:q])
     @tweets = @q.result.order(id: :desc).page(params[:page])

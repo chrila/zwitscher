@@ -14,13 +14,13 @@
 <% end %>
 
 <h2 class="display-5 my-3">Tweets</h2>
-<div class="row row-cols-1 row-cols-xl-2">
   <% if @tweets.size.positive? %>
-    <%= render(@tweets) %>
+    <div class="row row-cols-1 row-cols-xl-2">
+      <%= render(@tweets) %>
+    </div>
   <% else %>
-    <p>Start following users to see some tweets!</p>
+    <h3>No tweets found :(</h3>
   <% end %>
-</div>
 
 <div class="my-3">
   <%= paginate @tweets %>

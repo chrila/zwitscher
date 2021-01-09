@@ -23,7 +23,7 @@
           <% end %>
         <% end %>
       </div>
-      <p class="card-text"><%= tweet.content %></p>
+      <p class="card-text"><%= raw format_tweet_content(tweet.content) %></p>
       <p class="card-text">
         <small class="text-muted">
           <%= link_to "#{time_ago_in_words(tweet.created_at)} ago", tweet_path(tweet) %>
