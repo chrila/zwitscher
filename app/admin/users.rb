@@ -1,6 +1,8 @@
 ActiveAdmin.register User do
   includes :tweets, :likes, :following
 
+  member_action :ban, method: :put
+
   index do
     column :id
     column :name
@@ -12,7 +14,9 @@ ActiveAdmin.register User do
     column :retweet_count
     column :like_count
 
-    actions
+    actions defaults: true do |user|
+      link_to(user.banned? ? 'Unban' : 'Ban', ban_admin_user_path(user), method: :put, class: "member_link")
+    end
   end
 
   form do |f|
@@ -34,6 +38,17 @@ ActiveAdmin.register User do
         params[:user].delete("password_confirmation")
       end
       super
+    end
+
+    def ban
+      user = User.find(params[:id])
+      user.toggle!(:banned)
+
+      if user.save
+        respond_to do |format|
+          format.html { redirect_to admin_users_path, notice: "User #{user} #{user.banned? ? 'banned' : 'unbanned'}." }
+        end
+      end
     end
   end
   

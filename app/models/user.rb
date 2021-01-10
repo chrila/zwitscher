@@ -68,4 +68,8 @@ class User < ApplicationRecord
   def like_count
     likes.size
   end
+
+  def active_for_authentication? 
+    !banned? 
+  end
 end
