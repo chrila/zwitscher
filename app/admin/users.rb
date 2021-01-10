@@ -15,7 +15,7 @@ ActiveAdmin.register User do
     column :like_count
 
     actions defaults: true do |user|
-      link_to(user.banned? ? 'Unban' : 'Ban', ban_admin_user_path(user), method: :put, class: "member_link")
+      link_to(user.banned? ? 'Unban' : 'Ban', ban_admin_user_path(user), method: :put)
     end
   end
 

@@ -168,12 +168,14 @@ rails db:seed
 ```
 
 ### Registrar el recurso
+
 Queremos usar ActiveAdmin para gestionar los usuarios, así que hay que registrar el recurso `User`:
 ```bash
 rails generate active_admin:resource User
 ```
 
 ### Cambiando las columnas
+
 Para cambiar las columnas en la vista del index, hay que agregarlas al archivo `app/admin/users.rb`:
 ```ruby
 includes :tweets, :likes, :following
@@ -194,7 +196,6 @@ end
 ```
 
 Y esos métodos al modelo `User`:
-
 ```ruby
 def following_user_count
   following_users.size
@@ -216,7 +217,6 @@ end
 ### El formulario para editar un usuario
 
 Para que se pueda editar un usuario, hay que realizar los siguientes cambios al archivo `app/admin/users.rb`:
-
 ```ruby
 form do |f|
   inputs 'Edit user details' do
@@ -244,11 +244,86 @@ end
 ### Filtro
 
 La definición de los campos para filtrar va en el mismo archivo:
-
 ```ruby
 filter :email
 filter :name
 filter :created_at, as: :date_range
+```
+
+### Bloquear usuarios
+
+Para poder bloquear usuarios, los siguientes pasos son necesarios:
+
+### Campo 'banned'
+
+El modelo `Usuario` necesita un nuevo campo para guardar la información si es actualmente bloqueado o no. Eso se hace con la siguiente migración:
+```bash
+rails g migration AddBannedToUser banned:boolean
+```
+
+Después se puede editar la migración y poner un valor por defecto:
+```ruby
+class AddBannedToUser < ActiveRecord::Migration[6.0]
+  def change
+    add_column :users, :banned, :boolean, default: false
+  end
+end
+```
+
+### Action en ActiveAdmin
+Porque la acción de bloquear está solo disponible para el admin, se puede definir todo dentro del registro del recurso en ActiveAdmin. En este caso eso es el archivo `app/admin/users.rb`.
+
+Primero, se agrega la ruta:
+```ruby
+member_action :ban, method: :put
+```
+
+Después, el link que aparece en el index al lado de las otras acciónes:
+```ruby
+index do
+  column :id
+  column :name
+  column :email
+  column :pic_url
+  column :created_at
+  column :following_user_count
+  column :tweet_count
+  column :retweet_count
+  column :like_count
+
+  actions defaults: true do |user|
+    link_to(user.banned? ? 'Unban' : 'Ban', ban_admin_user_path(user), method: :put)
+  end
+end
+```
+
+Finalmente, hay que implementar la acción en el controlador. Para hacer eso, hay que agregar lo siguiente abajo de `controller do`:
+```ruby
+def ban
+  user = User.find(params[:id])
+  user.toggle!(:banned)
+
+  if user.save
+    respond_to do |format|
+      format.html { redirect_to admin_users_path, notice: "User #{user} #{user.banned? ? 'banned' : 'unbanned'}." }
+    end
+  end
+end
+```
+
+Con eso, es posible cambiar el valor del campo `banned` desde el admin control panel. Para que tenga efecto, hay que agregar un método al modelo `User`:
+```ruby
+def active_for_authentication? 
+  !banned? 
+end
+```
+
+También se puede cambiar el texto que aparece cuando un usuario bloqueado trata de hacer un login. Hay que cambiar el siguiente texto en `config/locales/devise.en.yml`:
+```yaml
+en:
+  devise:
+    failure:
+      inactive: "You have been banned because you were naughty!!"
 ```
 
 ## Historia 3
@@ -258,7 +333,6 @@ filter :created_at, as: :date_range
 ### Ransack
 
 Lo más fácil es usar ransack para el buscador. Primero, hay que agregar la gema al Gemfile y correr `bundle`:
-
 ```ruby
 gem 'ransack'
 ```
@@ -266,7 +340,6 @@ gem 'ransack'
 ### La vista
 
 Para el buscador, ransack ofrece un helper `search_form_for`. El tipo de busqueda está definido por el argumento `:content_cont`. Eso significa que se evalúa el campo `content` con el método `cont` ('contains').
-
 ```erb
 <%= search_form_for @q, class: "form-inline search-bar" do |f| %>
   <%= f.search_field :content_cont, class: "form-control mr-2" %>
@@ -277,7 +350,6 @@ Para el buscador, ransack ofrece un helper `search_form_for`. El tipo de busqued
 ### El controlador
 
 En el `TweetsController` hay que modificar un poco la acción `index`. Se agrega el buscador de ransack (`@q`), usando el parámetro del formulario (`q`):
-
 ```ruby
 def index
   @q = Tweet.tweets_for_me(current_user).ransack(params[:q])
@@ -294,7 +366,6 @@ Hay que reemplazar palabras que empiezan con un gato (`#`) por un link a una bus
 Para encontrar palabras que empiezan con un gato, se puede usar la siguiente expresión: `/#\b\w+\b/`
 
 Después hay que reemplazar cada hashtag por un link de busqueda, es decir un link al index de los tweets con un valor para el parámetro `q`. Agregué un helper al `TweetsController` que hace eso:
-
 ```ruby
 def format_tweet_content(content)
   content.gsub(/#\b\w+\b/) { |hashtag| "<a href=#{tweets_path}?q[content_cont]=%23#{hashtag[1..]}>#{hashtag}</a>" }
@@ -305,7 +376,6 @@ helper_method :format_tweet_content
 (para el parámetro `q`, se reemplaza el `#` por `%23`)
 
 Finalmente, uso este helper en la vista de `Tweet`:
-
 ```erb
 <%= raw format_tweet_content(tweet.content) %>
 ```
