@@ -13,6 +13,9 @@
         <% if signed_in? %>
           <% unless local_assigns[:retweet] %>
             <div class="tweet-button-group">
+              <%= link_to tweet_path(tweet), method: :delete, data: { confirm: 'Are you sure?' }, class: "px-2" do %>
+                <%= fa_icon('trash-alt', type: :solid) %>
+              <% end %>
               <%= link_to tweet_like_path(tweet), method: :post, class: "px-2" do %>
                 <%= tweet.liked?(current_user) ? fa_icon('heart', type: :solid) : fa_icon('heart', type: :regular) %>
               <% end %>

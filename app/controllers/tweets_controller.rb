@@ -53,6 +53,11 @@ class TweetsController < ApplicationController
   end
 
   def destroy
+    Tweet.find(params[:id]).destroy
+
+    respond_to do |format|
+      format.html { redirect_to root_path, notice: 'Tweet deleted.' }
+    end
   end
 
   private
