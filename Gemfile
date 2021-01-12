@@ -68,3 +68,5 @@ gem 'faker'
 gem 'activeadmin'
 # for searching
 gem 'ransack'
+# for rights management
+gem 'cancancan'
