@@ -43,4 +43,5 @@ class Tweet < ApplicationRecord
   scope :tweets_for_me, -> (user) { where(user: user.following_users) if user.present? }
   scope :retweets, -> { where.not(original_tweet: nil) }
   scope :news, -> { last(50) }
+  scope :between, -> (date_from, date_to) { where(created_at: date_from..date_to) }
 end

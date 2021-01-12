@@ -17,4 +17,5 @@ Rails.application.routes.draw do
   root 'tweets#index'
   
   get 'api/news'
+  get 'api/:date_from/:date_to', to: 'api#between'
 end

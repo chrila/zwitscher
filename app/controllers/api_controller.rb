@@ -1,8 +1,18 @@
 class ApiController < ActionController::API
 
   def news
-    tweets = []
-    Tweet.news.each do |t|
+    render json: tweet_hash_array(Tweet.news)
+  end
+
+  def between
+    render json: tweet_hash_array(Tweet.between(params[:date_from], params[:date_to]))
+  end
+
+  private
+
+  def tweet_hash_array(tweets)
+    tweets_arr = []
+    tweets.each do |t|
       tweet = { 
         id: t.id,
         content: t.content,
@@ -11,10 +21,9 @@ class ApiController < ActionController::API
         retweets_count: t.retweet_count,
         retweeted_from: t.tweet_id
       }
-      tweets.push(tweet)
+      tweets_arr.push(tweet)
     end
-
-    render json: tweets
+    tweets_arr
   end
 
 end
