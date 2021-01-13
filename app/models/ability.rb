@@ -4,7 +4,7 @@ class Ability
   include CanCan::Ability
 
   def initialize(user)
-    if user.present?
+    if user.present? && user.user_type == 'personal'
       can :destroy, Tweet, user_id: user.id
     end
   end

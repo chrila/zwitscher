@@ -8,6 +8,7 @@ ActiveAdmin.register User do
     column :name
     column :email
     column :pic_url
+    column :user_type
     column :created_at
     column :following_user_count
     column :tweet_count
@@ -24,12 +25,13 @@ ActiveAdmin.register User do
       input :email
       input :name
       input :pic_url
+      input :user_type, include_blank: false
       input :password
     end
     actions
   end
 
-  permit_params :email, :name, :pic_url, :password
+  permit_params :email, :name, :pic_url, :password, :user_type
 
   controller do
     def update
@@ -54,5 +56,6 @@ ActiveAdmin.register User do
   
   filter :email
   filter :name
+  filter :user_type, as: :select
   filter :created_at, as: :date_range
 end

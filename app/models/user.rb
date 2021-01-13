@@ -4,6 +4,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
+  enum user_type: [ :personal, :corporate ]
+
   has_many :tweets, dependent: :delete_all
   has_many :likes, dependent: :delete_all
   has_many :following, class_name: 'Following', foreign_key: 'user_id', dependent: :delete_all
