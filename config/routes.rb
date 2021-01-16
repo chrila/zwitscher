@@ -21,5 +21,6 @@ Rails.application.routes.draw do
     mount_devise_token_auth_for 'User', at: 'auth'
     get 'news', to: 'api#news'
     get ':date_from/:date_to', to: 'api#between', as: 'between'
+    post 'create', to: 'api#create', as: 'create'
   end
 end
