@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
+
   devise_for :users, controllers: {
     registrations: 'users/registrations',
     sessions: 'users/sessions'
@@ -16,6 +17,9 @@ Rails.application.routes.draw do
 
   root 'tweets#index'
   
-  get 'api/news'
-  get 'api/:date_from/:date_to', to: 'api#between'
+  namespace :api do
+    mount_devise_token_auth_for 'User', at: 'auth'
+    get 'news', to: 'api#news'
+    get ':date_from/:date_to', to: 'api#between', as: 'between'
+  end
 end

@@ -4,6 +4,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
+  include DeviseTokenAuth::Concerns::User
+
   enum user_type: [ :personal, :corporate ]
 
   has_many :tweets, dependent: :delete_all

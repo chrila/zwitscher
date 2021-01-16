@@ -58,6 +58,8 @@ end
 ## gems added for this project
 # use devise for authentication
 gem 'devise'
+# use token based authentication for the API
+gem 'devise_token_auth'
 # use kaminari for pagination
 gem 'kaminari'
 # font awesome icons

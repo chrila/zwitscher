@@ -1,4 +1,6 @@
-class ApiController < ActionController::API
+class Api::ApiController < ActionController::API
+
+  include DeviseTokenAuth::Concerns::SetUserByToken
 
   def news
     render json: tweet_hash_array(Tweet.news)
