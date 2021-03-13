@@ -1,4 +1,4 @@
-# README - Hito 2
+# README - Hito 3
 
 Nota: Este readme solo incluye las funcionalidades nuevas en hito 3. Los otros readme: [Hito 1](../v0.1/README.md), [Hito 2](../v0.2/README.md).
 
