@@ -32,7 +32,9 @@ class TweetsController < ApplicationController
     @tweet.toggle_like(current_user)
 
     respond_to do |format|
-      format.html { redirect_to root_path, notice: "Tweet #{@tweet.liked?(current_user) ? 'liked' : 'unliked'}" }
+      notice = "Tweet #{@tweet.liked?(current_user) ? 'liked' : 'unliked'}"
+      format.js { render nothing: true, notice: notice }
+      format.html { redirect_to root_path, notice: notice }
     end
   end
 
