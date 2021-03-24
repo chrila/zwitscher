@@ -1,0 +1,8 @@
+id = "follow-link-<%= @other_user.id %>"
+elem = document.getElementById(id);
+
+<% if current_user.following?(@other_user) %>
+  elem.innerText = 'Unfollow';
+<% else %>
+  elem.innerText = 'Follow';
+<% end %>

@@ -1,4 +1,4 @@
-id = "liked-icon-<%= @tweet.id %>"
+id = "like-icon-<%= @tweet.id %>"
 elem = document.getElementById(id).children[0];
 
 <% if @tweet.liked?(current_user) %>

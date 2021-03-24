@@ -6,11 +6,13 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # POST /users/1/follow
   def follow
-    other_user = User.find(params[:id])
-    current_user.toggle_follow(other_user)
+    @other_user = User.find(params[:id])
+    current_user.toggle_follow(@other_user)
 
     respond_to do |format|
-      format.html { redirect_to root_path, notice: "You #{current_user.following?(other_user) ? 'are now' : 'stopped'} following #{other_user}" }
+      notice = "You #{current_user.following?(@other_user) ? 'are now' : 'stopped'} following #{@other_user}"
+      format.js { render nothing: true, notice: notice }
+      format.html { redirect_to root_path, notice: notice }
     end
   end
 

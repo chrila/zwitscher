@@ -18,7 +18,7 @@
                   <%= fa_icon('trash-alt', type: :solid) %>
                 <% end %>
               <% end %>
-              <%= link_to tweet_like_path(tweet), method: :post, remote: true, class: "px-2", id: "liked-icon-#{tweet.id}" do %>
+              <%= link_to tweet_like_path(tweet), method: :post, remote: true, class: "px-2", id: "like-icon-#{tweet.id}" do %>
                 <%= tweet.liked?(current_user) ? fa_icon('heart', type: :solid) : fa_icon('heart', type: :regular) %>
               <% end %>
               <%= link_to tweet_retweet_path(tweet), method: :post, remote: true, class: "px-2" do %>
@@ -35,7 +35,8 @@
         </small>
         <% if signed_in? && !local_assigns[:retweet] && can?(:follow, tweet.user) %>
           <small class="text-muted tweet-unfollow-link">
-            <%= link_to(current_user.following?(tweet.user) ? 'Unfollow' : 'Follow', user_follow_path(tweet.user), method: :post, remote: true) %>
+            <%= link_to(current_user.following?(tweet.user) ? 'Unfollow' : 'Follow', user_follow_path(tweet.user),
+            method: :post, remote: true, id: "follow-link-#{tweet.user.id}") %>
           </small>
         <% end %>
       </p>
