@@ -3,12 +3,12 @@
 require 'faker'
 
 rand(10..20).times do |i|
-  u = User.create(email: Faker::Internet.unique.email, name: Faker::Name.unique.name, password: Faker::Internet.password, pic_url: "https://picsum.photos/#{1000 + i}/600")
+  User.create!(email: Faker::Internet.unique.email, name: Faker::Name.unique.name, password: Faker::Internet.password, pic_url: "https://picsum.photos/#{1000 + i}/600")
 end
 
 (User.count * rand(10..20)).times do
   # randomly choose user
-  user_id = rand(User.first.id..User.last.id)
+  user_id = User.all.sample.id
 
   # choose if the user creates a new tweet or if he shall do a retweet
   if rand(1..4) == 4 && Tweet.count > 0
@@ -23,13 +23,13 @@ end
       when 3 then Faker::TvShows::Simpsons.quote
     end
 
-    Tweet.create(user_id: user_id, content: content)
+    Tweet.create!(user_id: user_id, content: content)
   end
 end
 
 User.all.each do |u|
   Tweet.all.each do |t|
-    Like.create(tweet: t, user: u) if rand(1..5) == 1
+    Like.create!(tweet: t, user: u) if rand(1..5) == 1
   end
 end
 

@@ -78,8 +78,8 @@ ActiveRecord::Schema.define(version: 2021_01_14_014737) do
     t.string "name"
     t.boolean "banned", default: false
     t.integer "user_type"
-    t.string "provider"
-    t.string "uid"
+    t.string "provider", default: "email", null: false
+    t.string "uid", default: "", null: false
     t.text "tokens"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

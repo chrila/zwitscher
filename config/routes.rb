@@ -16,7 +16,7 @@ Rails.application.routes.draw do
   post 'tweets/:id/retweet', to: 'tweets#retweet', as: 'tweet_retweet'
 
   root 'tweets#index'
-  
+
   namespace :api do
     mount_devise_token_auth_for 'User', at: 'auth'
     get 'news', to: 'api#news'
