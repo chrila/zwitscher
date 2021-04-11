@@ -2,8 +2,8 @@
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
 #
-# This file is the source Rails uses to define your schema when running `rails
-# db:schema:load`. When creating a new database, `rails db:schema:load` tends to
+# This file is the source Rails uses to define your schema when running `bin/rails
+# db:schema:load`. When creating a new database, `bin/rails db:schema:load` tends to
 # be faster and is potentially less error prone than running all of your
 # migrations from scratch. Old migrations may fail to apply correctly if those
 # migrations use external dependencies or application code.
@@ -16,9 +16,9 @@ ActiveRecord::Schema.define(version: 2021_01_14_014737) do
     t.string "namespace"
     t.text "body"
     t.string "resource_type"
-    t.integer "resource_id"
+    t.bigint "resource_id"
     t.string "author_type"
-    t.integer "author_id"
+    t.bigint "author_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["author_type", "author_id"], name: "index_active_admin_comments_on_author_type_and_author_id"
@@ -39,8 +39,8 @@ ActiveRecord::Schema.define(version: 2021_01_14_014737) do
   end
 
   create_table "followings", force: :cascade do |t|
-    t.integer "user_id", null: false
-    t.integer "following_user_id", null: false
+    t.bigint "user_id", null: false
+    t.bigint "following_user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["following_user_id"], name: "index_followings_on_following_user_id"
@@ -48,8 +48,8 @@ ActiveRecord::Schema.define(version: 2021_01_14_014737) do
   end
 
   create_table "likes", force: :cascade do |t|
-    t.integer "user_id", null: false
-    t.integer "tweet_id", null: false
+    t.bigint "user_id", null: false
+    t.bigint "tweet_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["tweet_id"], name: "index_likes_on_tweet_id"
@@ -78,8 +78,8 @@ ActiveRecord::Schema.define(version: 2021_01_14_014737) do
     t.string "name"
     t.boolean "banned", default: false
     t.integer "user_type"
-    t.string "provider"
-    t.string "uid"
+    t.string "provider", default: "email", null: false
+    t.string "uid", default: "", null: false
     t.text "tokens"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

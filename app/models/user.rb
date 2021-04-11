@@ -6,7 +6,7 @@ class User < ApplicationRecord
 
   include DeviseTokenAuth::Concerns::User
 
-  enum user_type: [ :personal, :corporate ]
+  enum user_type: %i[personal corporate]
 
   has_many :tweets, dependent: :delete_all
   has_many :likes, dependent: :delete_all
@@ -14,7 +14,7 @@ class User < ApplicationRecord
   has_many :followed_by, class_name: 'Following', foreign_key: 'following_user'
 
   after_commit :follow_self, on: :create
-  
+
   def to_s
     name
   end
@@ -73,7 +73,7 @@ class User < ApplicationRecord
     likes.size
   end
 
-  def active_for_authentication? 
-    !banned? 
+  def active_for_authentication?
+    !banned?
   end
 end
