@@ -1,4 +1,4 @@
-id = "#like-icon-<%= @tweet.id %>"
+id = "#tweet-like-link-<%= @tweet.id %>"
 elem = $(id).children();
 
 <% if @tweet.liked?(current_user) %>

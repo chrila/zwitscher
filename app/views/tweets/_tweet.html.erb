@@ -18,7 +18,7 @@
                   <%= fa_icon('trash-alt', type: :solid) %>
                 <% end %>
               <% end %>
-              <%= link_to tweet_like_path(tweet), method: :post, remote: true, class: "px-2", id: "like-icon-#{tweet.id}" do %>
+              <%= link_to tweet_like_path(tweet), method: :post, remote: true, class: "px-2", id: "tweet-like-link-#{tweet.id}" do %>
                 <%= tweet.liked?(current_user) ? fa_icon('heart', type: :solid) : fa_icon('heart', type: :regular) %>
               <% end %>
               <%= link_to tweet_retweet_path(tweet), method: :post, remote: true, class: "px-2" do %>
