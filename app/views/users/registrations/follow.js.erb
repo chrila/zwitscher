@@ -1,8 +1,10 @@
-id = "follow-link-<%= @other_user.id %>"
-elem = document.getElementById(id);
+// remove user from "users to follow"
+className = ".user-follow-link-<%= @other_user.id %>";
+$(className).parentsUntil('.user-to-follow').parent().hide(500);
 
-<% if current_user.following?(@other_user) %>
-  elem.innerText = 'Unfollow';
-<% else %>
-  elem.innerText = 'Follow';
-<% end %>
+// load new "users to follow"
+// TODO
+
+// remove tweet cards of unfollowed user
+className = ".tweet-follow-link-<%= @other_user.id %>";
+$(className).parentsUntil('.col-tweet').parent().hide(500);

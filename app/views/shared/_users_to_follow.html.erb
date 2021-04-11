@@ -1,12 +1,13 @@
 <div class="row row-cols-2 row-cols-lg-4 users-to-follow-inner">
   <% current_user.users_to_follow.each do |u| %>
-    <div class="p-2">
-      <div class="user-to-follow">
-        <img class="user-avatar" src="<%= u.pic_url %>" title="<%= u %>" />
-        <div class="user-to-follow-header">
-          <h5 class="user-to-follow-name"><%= u %></h5><br>
-          <%= link_to(current_user.following?(u) ? 'Unfollow' : 'Follow', user_follow_path(u), method: :post, class: 'card-link') %>
-        </div>
+    <div class="user-to-follow p-2">
+      <img class="user-avatar" src="<%= u.pic_url %>" title="<%= u %>" />
+      <div class="user-to-follow-header">
+        <h5 class="user-to-follow-name"><%= u %></h5><br>
+        <%= link_to(
+          current_user.following?(u) ? 'Unfollow' : 'Follow', user_follow_path(u),
+          remote: true, method: :post, class: "card-link user-follow-link-#{u.id}")
+        %>
       </div>
     </div>
   <% end %>

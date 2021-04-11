@@ -1,10 +1,10 @@
-id = "like-icon-<%= @tweet.id %>"
-elem = document.getElementById(id).children[0];
+id = "#like-icon-<%= @tweet.id %>"
+elem = $(id).children();
 
 <% if @tweet.liked?(current_user) %>
-  elem.classList.remove('far');
-  elem.classList.add('fas');
+  elem.removeClass('far');
+  elem.addClass('fas');
 <% else %>
-  elem.classList.remove('fas');
-  elem.classList.add('far');
+  elem.removeClass('fas');
+  elem.addClass('far');
 <% end %>

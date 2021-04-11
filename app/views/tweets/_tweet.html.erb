@@ -1,4 +1,4 @@
-<div class="col mb-4">
+<div class="col col-tweet mb-4">
   <div class="card <%= local_assigns[:retweet] ? 'card-retweet' : 'card-tweet' %>">
     <div class="card-body">
       <div class="tweet-header">
@@ -36,7 +36,7 @@
         <% if signed_in? && !local_assigns[:retweet] && can?(:follow, tweet.user) %>
           <small class="text-muted tweet-unfollow-link">
             <%= link_to(current_user.following?(tweet.user) ? 'Unfollow' : 'Follow', user_follow_path(tweet.user),
-            method: :post, remote: true, id: "follow-link-#{tweet.user.id}") %>
+            method: :post, remote: true, class: "tweet-follow-link-#{tweet.user.id}") %>
           </small>
         <% end %>
       </p>
