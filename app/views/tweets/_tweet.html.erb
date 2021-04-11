@@ -14,7 +14,7 @@
           <% unless local_assigns[:retweet] %>
             <div class="tweet-button-group">
               <% if can? :destroy, tweet %>
-                <%= link_to tweet_path(tweet), method: :delete, data: { confirm: 'Are you sure?' }, remote: true, class: "px-2" do %>
+                <%= link_to tweet_path(tweet), method: :delete, data: { confirm: 'Are you sure?' }, remote: true, class: "px-2", id: "tweet-delete-link-#{tweet.id}" do %>
                   <%= fa_icon('trash-alt', type: :solid) %>
                 <% end %>
               <% end %>

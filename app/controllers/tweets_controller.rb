@@ -1,4 +1,5 @@
 class TweetsController < ApplicationController
+  before_action :set_tweet, only: %i[show update destroy retweet like]
 
   def format_tweet_content(content)
     content.gsub(/#\b\w+\b/) { |hashtag| "<a href=#{tweets_path}?q[content_cont]=%23#{hashtag[1..]}>#{hashtag}</a>" }
@@ -11,7 +12,6 @@ class TweetsController < ApplicationController
   end
 
   def show
-    @tweet = Tweet.find(params[:id])
   end
 
   def create
@@ -28,7 +28,6 @@ class TweetsController < ApplicationController
   end
 
   def like
-    @tweet = Tweet.find(params[:id])
     @tweet.toggle_like(current_user)
 
     respond_to do |format|
@@ -39,7 +38,6 @@ class TweetsController < ApplicationController
   end
 
   def retweet
-    @tweet = Tweet.find(params[:id])
     new_tweet = @tweet.retweet(current_user)
 
     respond_to do |format|
@@ -55,10 +53,12 @@ class TweetsController < ApplicationController
   end
 
   def destroy
-    Tweet.find(params[:id]).destroy
+    @tweet.destroy
 
     respond_to do |format|
-      format.html { redirect_to root_path, notice: 'Tweet deleted.' }
+      notice = 'Tweet deleted.'
+      format.js {render nothing: true, notice: notice }
+      format.html { redirect_to root_path, notice: notice }
     end
   end
 
@@ -66,5 +66,9 @@ class TweetsController < ApplicationController
 
   def tweet_params
     params.require(:tweet).permit(:content)
+  end
+
+  def set_tweet
+    @tweet = Tweet.find(params[:id])
   end
 end

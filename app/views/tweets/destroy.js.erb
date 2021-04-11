@@ -1,0 +1,3 @@
+// remove user from "users to follow"
+id = "#tweet-delete-link-<%= @tweet.id %>";
+$(id).parentsUntil('.col-tweet').parent().hide(500);
